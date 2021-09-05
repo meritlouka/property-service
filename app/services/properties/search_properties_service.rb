@@ -30,7 +30,7 @@ module Properties
 
     def validate
       if !valid?
-        raise InvalidInputParamsError, errors.messages
+        raise InvalidInputParamsError.new(errors.to_hash), 'Invalid input params'
       end
     end
 
@@ -40,6 +40,7 @@ module Properties
                     .by_property_type(@property_type)
                     .by_offer_type(@marketing_type)
                     .in_certian_redius(@lat, @lng, DISTANCE_APPLICABLE)
+                    .nearest_first(@lat, @lng)
 
       if(limit.present? && @page.present?)
         properties = properties.limit(@limit).offset(@limit * (@page.to_i - 1))

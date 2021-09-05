@@ -16,7 +16,7 @@ class Api::PropertyController < ApplicationController
     rescue NoDataError => e
       render json: { error: e }, :status => :ok
     rescue InvalidInputParamsError => e
-      render json: { error: e }, :status => :unprocessable_entity
+      render json: { error: e.errors_hash }, :status => :unprocessable_entity
     rescue StandardError => e
       render json: { error: e }, :status => :internal_server_error
     end
