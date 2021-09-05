@@ -2,7 +2,6 @@ module Properties
   class SearchPropertiesService < ApplicationService
     include ActiveModel::Validations
     include ActiveModel::Callbacks
-    include ActiveModel::Serialization
     attr_reader :property_type, :marketing_type, :lat, :lng, :page, :limit
     DISTANCE_APPLICABLE = 5
 
