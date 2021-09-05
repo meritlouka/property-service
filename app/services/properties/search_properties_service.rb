@@ -17,7 +17,7 @@ module Properties
     define_model_callbacks :initialize, only: [:after]
     after_initialize :validate
 
-    def initialize(property_type, marketing_type, lat, lng, page, limit)
+    def initialize(property_type, marketing_type, lat, lng, page = nil , limit = nil)
       run_callbacks :initialize do
         @property_type = property_type
         @marketing_type = marketing_type
