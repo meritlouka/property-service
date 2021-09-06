@@ -38,7 +38,7 @@ module Properties
                     .select(:house_number, :street,:city, :zip_code, :city, :lat, :lng, :price)
                     .by_property_type(@property_type)
                     .by_offer_type(@marketing_type)
-                    .in_certian_redius(@lat, @lng, DISTANCE_APPLICABLE)
+                    .in_certian_redius_km(@lat, @lng, DISTANCE_APPLICABLE)
                     .nearest_first(@lat, @lng)
 
       if(limit.present? && @page.present?)

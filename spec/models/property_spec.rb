@@ -49,11 +49,26 @@ RSpec.describe Property, type: :model do
     end
   end
 
-  describe ".in_certian_redius" do
-    it "includes in redius below given" do
+  describe ".in_certian_redius_km" do
+    #https://www.nhc.noaa.gov/gccalc.shtml
+    it "includes in redius below given and doesnot include out redius below given" do
       in_area_property = FactoryBot.create(:property, lat: "52.5342963", lng: "13.4236807")
       out_area_property = FactoryBot.create(:property, lat: "52.5942963", lng: "13.4936807")
-      properties = Property.in_certian_redius("52.5442963", "13.4336807", "5")
+      properties = Property.in_certian_redius_km("52.5442963", "13.4336807", "5")
+      expect(properties).to include(in_area_property)
+      expect(properties).not_to include(out_area_property)
+    end
+    it "includes in redius below given and doesnot include out redius below given" do
+      in_area_property = FactoryBot.create(:property, lat: "12.01", lng: "50.01")   #away 2km
+      out_area_property = FactoryBot.create(:property, lat: "12.04", lng: "50.04") #away 6km
+      properties = Property.in_certian_redius_km("12", "50", "5")
+      expect(properties).to include(in_area_property)
+      expect(properties).not_to include(out_area_property)
+    end
+    it "includes in redius below given and doesnot include out redius below given" do
+      in_area_property = FactoryBot.create(:property, lat: "50.01", lng: "13.01")  #away 1km
+      out_area_property = FactoryBot.create(:property, lat: "50.07", lng: "13.07") #away 9km
+      properties = Property.in_certian_redius_km("50", "13", "5")
       expect(properties).to include(in_area_property)
       expect(properties).not_to include(out_area_property)
     end
