@@ -1,7 +1,7 @@
 class Api::PropertyController < ApplicationController
   def search
     begin
-      properties = Properties::SearchPropertiesService.call(
+      @properties = Properties::SearchPropertiesService.call(
                             params[:property_type],
                             params[:marketing_type],
                             params[:lat],
@@ -10,9 +10,9 @@ class Api::PropertyController < ApplicationController
                             params[:limit]
                           )
 
-      render json: properties,
-             each_serializer: PropertySerializer,
-             :meta => { :total => properties.size, page: params[:page] }
+      render json: @properties,
+             each_serializer: PropertySerializer
+
     rescue NoDataError => e
       render json: { error: e }, :status => :ok
     rescue InvalidInputParamsError => e
